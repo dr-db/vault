@@ -1,0 +1,14 @@
+description: Ensures nothing obvious is broken for faster failures.
+docker:
+  - image: circleci/buildpack-deps
+steps:
+  - run:
+      name: Install CircleCI CLI
+      command: |
+        curl -sSL \
+            "https://github.com/CircleCI-Public/circleci-cli/releases/download/v${CIRCLECI_CLI_VERSION}/circleci-cli_${CIRCLECI_CLI_VERSION}_linux_amd64.tar.gz" \
+          | sudo tar --overwrite -xz \
+            -C /usr/local/bin \
+            "circleci-cli_${CIRCLECI_CLI_VERSION}_linux_amd64/circleci"
+  - run:
+      command: make ci-verify
